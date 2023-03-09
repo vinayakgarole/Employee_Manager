@@ -3,6 +3,9 @@ package services;
 import interfaces.IEmployeeManager;
 import model.EmployeeContacts;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,13 +14,27 @@ import java.util.Scanner;
 public class EmployeeManagerIMPL implements IEmployeeManager {
 
     private static ArrayList<EmployeeContacts> contactsOfPersons = new ArrayList<>();
-    private static Scanner sc = new Scanner(System.in);//for user input
+    private static Scanner sc = new Scanner(System.in); // for user input
 
     @Override
     public int createContacts(EmployeeContacts employeeContacts) {
+        try {
+            Connection connection = getConnection();
+            System.out.println("Connection is successful!!! " + connection);
+        } catch (SQLException e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
+            return -1;
+        }
         contactsOfPersons.add(employeeContacts);
         System.out.println(employeeContacts.toString());
         return contactsOfPersons.indexOf(employeeContacts);
+    }
+
+    private Connection getConnection() throws SQLException {
+        String jdbcUrl = "jdbc:mysql://localhost:3306/Employee_Manager";
+        String userName = "root";
+        String password = "root123";
+        return DriverManager.getConnection(jdbcUrl, userName, password);
     }
 
     private int getIndexForNextEmptyLocation() {
