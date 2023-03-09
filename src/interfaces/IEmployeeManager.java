@@ -2,7 +2,7 @@ package interfaces;
 
 import model.EmployeeContacts;
 
-public interface IEmpolyeeManager {
+public interface IEmployeeManager {
 
     int createContacts(EmployeeContacts employeeContacts);
 
@@ -14,5 +14,7 @@ public interface IEmpolyeeManager {
 
     void searchByID();
 
-   // void sortBySalary();
+    void sortBySalary();
+
+    void calculateAverageSalary();
 }

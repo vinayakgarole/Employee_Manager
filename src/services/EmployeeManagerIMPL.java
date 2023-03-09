@@ -1,12 +1,14 @@
 package services;
 
-import interfaces.IEmpolyeeManager;
+import interfaces.IEmployeeManager;
 import model.EmployeeContacts;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
-public class EmployeeManagerIMPL implements IEmpolyeeManager {
+public class EmployeeManagerIMPL implements IEmployeeManager {
 
     private static ArrayList<EmployeeContacts> contactsOfPersons = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);//for user input
@@ -68,19 +70,33 @@ public class EmployeeManagerIMPL implements IEmpolyeeManager {
                 .forEach(n -> System.out.println("Search ID: " + n.getId()));
     }
 
-//    @Override
-//    public void sortBySalary() {
-//        Scanner sc =new Scanner(System.in);
-//        System.out.println("1. Accending 2. \n2. Decending");
-//        int checking = sc.nextInt();
-//        switch (checking) {
-//            case 1:
-//                sortBySalary();
-//                break;
-//            case 2:
-//                sortBySalary();
-//        }
-//    }
+    @Override
+    public void sortBySalary() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Ascending 2. Descending");
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1:
+                Collections.sort(contactsOfPersons, Comparator.comparing(EmployeeContacts::getSalary));
+                break;
+            case 2:
+                Collections.sort(contactsOfPersons, Comparator.comparing(EmployeeContacts::getSalary).reversed());
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    @Override
+    public void calculateAverageSalary() {
+        double totalSalary = 0;
+        for (EmployeeContacts contacts : contactsOfPersons) {
+            totalSalary += contacts.getSalary();
+        }
+        double avgSalary = totalSalary / contactsOfPersons.size();
+        System.out.println("Average Salary: " + avgSalary);
+    }
+
 
     private void editContactDetails(EmployeeContacts employeeContacts) {
         EmployeeContacts employeeContacts1 = new EmployeeContacts();

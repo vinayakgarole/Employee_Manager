@@ -1,6 +1,6 @@
 package controller;
 
-import interfaces.IEmpolyeeManager;
+import interfaces.IEmployeeManager;
 import model.EmployeeContacts;
 import services.EmployeeManagerIMPL;
 
@@ -13,7 +13,7 @@ public class EmployeeManagerMain {
     public static void main(String[] args) {
 
         int i = 0;
-        IEmpolyeeManager empolyeeManager = new EmployeeManagerIMPL();
+        IEmployeeManager employeeManager = new EmployeeManagerIMPL();
 
         do {
             System.out.println("1 Press create contact");
@@ -21,32 +21,39 @@ public class EmployeeManagerMain {
             System.out.println("3 Press Edit Contact");
             System.out.println("4 Press Delete Contact");
             System.out.println("5 Press Check By ID Contact");
+            System.out.println("6 Press Sort by Salary Contact");
+            System.out.println("7 Press Calculate Average salary Contact");
             int ch = sc.nextInt();
 
             switch (ch) {
                 case 1:
                     System.out.println("Create contact");
                     EmployeeContacts  employeeContacts = getContacts();
-                    int index = empolyeeManager.createContacts(employeeContacts) + 1;
+                    int index = employeeManager.createContacts(employeeContacts) + 1;
                     System.out.println("Contact id = " + index);
                     break;
                 case 2:
-                    empolyeeManager.showContacts();
+                    employeeManager.showContacts();
                     break;
                 case 3:
                     System.out.println("Enter First Name: ");
                     String firstName = sc.next();
-                    empolyeeManager.editContacts(firstName);
+                    employeeManager.editContacts(firstName);
                     break;
                 case 4:
                     System.out.println("Enter the first name of details you want to delete");
                     String firstName1 = sc.next();
-                    empolyeeManager.deleteContacts(firstName1);
+                    employeeManager.deleteContacts(firstName1);
                     break;
                 case 5:
-                    empolyeeManager.searchByID();
+                    employeeManager.searchByID();
                     break;
-
+                case 6:
+                    employeeManager.sortBySalary();
+                    break;
+                case 7:
+                    employeeManager.calculateAverageSalary();
+                    break;
                 default:
                     System.out.println("Invalid Input");
                     break;
